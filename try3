@@ -347,37 +347,35 @@ print('fscore: {}'.format(fscore))
 print('support: {}'.format(support))
 sums =0
 
-for i in range(3):
-    for j in range(3):
+for i in range(2):
+    for j in range(2):
         sums = sums+ conf[i][j]
 
-false_pos1 = conf[1][0]+conf[2][0]
-false_pos2 = conf[0][1]+conf[2][1]
-false_pos3 = conf[0][2]+conf[1][2]
+false_pos1 = conf[1][0]+conf[1][0]
+false_pos2 = conf[0][1]+conf[0][1]
+#false_pos3 = conf[0][2]+conf[1][2]
 
 true_pos1 = conf[0][0]
 true_pos2 = conf[1][1]
-true_pos3 = conf[2][2]
+#true_pos3 = conf[2][2]
 
-true_neg1 = conf[1][1]+conf[1][2]+conf[2][1]+conf[2][2]
-true_neg2 = conf[0][0]+conf[2][0]+conf[0][2]+conf[2][2]
-true_neg3 = conf[0][0]+conf[0][1]+conf[1][0]+conf[1][1]
+true_neg1 = conf[1][1]+conf[1][0]+conf[0][1]+conf[0][0]
+true_neg2 = conf[0][0]+conf[1][0]+conf[0][1]+conf[0][0]
+#true_neg3 = conf[0][0]+conf[0][1]+conf[1][0]+conf[1][1]
 
-false_neg1 = conf[0][1]+conf[0][2]
-false_neg2 = conf[1][0]+conf[1][2]
-false_neg3 = conf[2][0]+conf[2][1]
-print "Precision of anthracnose: "+str(precision[0]*100)+"%"
-print "Recall OF anthracnose: "+str(recall[0]*100)+"%"
-print "F1 Measure of anthracnose: " +str(fscore[0]*100)+"%"
-
-print "Precision of anthracnose : "+str(precision[1]*100)+"%"
-print "Recall OF anthracnose: "+str(recall[1]*100)+"%"
-print "F1 Measure of anthracnose: " +str(fscore[1]*100)+"%"
+false_neg1 = conf[0][1]+conf[1][0]
+false_neg2 = conf[1][0]+conf[0][1]
+#false_neg3 = conf[2][0]+conf[2][1]
+print ("Precision of anthracnose: "+str(precision[0]*100)+"%")
+print ("Recall OF anthracnose: "+str(recall[0]*100)+"%")
+print ("F1 Measure of anthracnose: " +str(fscore[0]*100)+"%")
 
 
-print "Precision of healthy: "+str(precision[2]*100)+"%"
-print "Recall OF healthy: "+str(recall[2]*100)+"%"
-print "F1 Measure of healthy: " +str(fscore[2]*100)+"%"
+
+
+print( "Precision of healthy: "+str(precision[1]*100)+"%")
+print ("Recall OF healthy: "+str(recall[1]*100)+"%")
+print ("F1 Measure of healthy: " +str(fscore[1]*100)+"%")
 
 #total_true_pos = true_pos1+true_pos2+true_pos3
 #total_true_neg = true_neg1+true_neg2+true_neg3
@@ -385,38 +383,34 @@ print "F1 Measure of healthy: " +str(fscore[2]*100)+"%"
 #total_false_pos = false_pos1+false_pos2+false_pos3
 
 #print sums
-print "anthracnose................................."
-print "True Positive : "+ str(true_pos1)
-print "True Ngetive : "+ str(true_neg1)
-print "False Positive: "+ str(false_pos1)
-print "False Negetive: "+str(false_neg1)
+print( "anthracnose.................................")
+print ("True Positive : "+ str(true_pos1))
+print ("True Ngetive : "+ str(true_neg1))
+print ("False Positive: "+ str(false_pos1))
+print( "False Negetive: "+str(false_neg1))
 
-print "anthracnose................................."
-print "True Positive : "+ str(true_pos2)
-print "True Ngetive : "+ str(true_neg2)
-print "False Positive: "+ str(false_pos2)
-print "False Negetive: "+str(false_neg2)
 
-print "healthy................................."
-print "True Positive : "+ str(true_pos3)
-print "True Ngetive : "+ str(true_neg3)
-print "False Positive: "+ str(false_pos3)
-print "False Negetive: "+str(false_neg3
+
+print ("healthy.................................")
+print ("True Positive : "+ str(true_pos2))
+print ("True Ngetive : "+ str(true_neg2))
+print ("False Positive: "+ str(false_pos2))
+print ("False Negetive: "+str(false_neg2))
                              
-pecificity=[]
+specificity=[]
 specificity.append(1-(true_neg1/(true_neg1+false_pos1)))
 specificity.append(1-(true_neg2/(true_neg2+false_pos2)))
-specificity.append(1-(true_neg3/(true_neg3+false_pos3)))
+#specificity.append(1-(true_neg3/(true_neg3+false_pos3)))
 
-print specificity
+print (specificity)
 
 sensitivity=[]
 
 sensitivity.append(true_pos1/true_pos1+false_neg1)
 sensitivity.append(true_pos2/true_pos2+false_neg2)
-sensitivity.append(true_pos3/true_pos3+false_neg3)
+#sensitivity.append(true_pos3/true_pos3+false_neg3)
 
-print sensitivity                             
+print (sensitivity)                             
 #ROC Curve
 
 #plt.figure()
@@ -428,24 +422,22 @@ print sensitivity
 
 fl = open("output.txt","w+")
 
-print "accuracy:   "+str(accuracy)+"%"
+print ("accuracy:   "+str(accuracy)+"%")
 
 fl.write("accuracy:   "+str(accuracy)+"%\r\n")
 
-print y_pred[0]
+print (y_pred[0])
 
 if (y_pred[0]==1.0):
-    print "This disease is Blast"
-    fl.write("This disease is Blast")
+    print ("This disease is anthracnose")
+    fl.write("This disease is anthracnose")
     
 elif (y_pred[0]==2.0):
-    print "This disease is Bactarial Blight"
-    fl.write("This disease is Bactarial Blight")
-elif(y_pred[0]==3.0):
-    print "This disease is Brown Spot"
-    fl.write("This disease is Brown Spot")
+    print ("This disease is healthy")
+    fl.write("This disease is healthy")
+
 else:
-    print "I do not know what it is"
+    print( "I do not know what it is")
     fl.write("I don not know it is")
 
 
